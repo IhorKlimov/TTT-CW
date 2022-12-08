@@ -10,7 +10,7 @@
     <string name="X" translatable="false">X</string>
     <string name="O" translatable="false">O</string>
     <string name="TTT" translatable="false">Tic Tac Toe</string>
-    <string name="oneplr">One Player</string>
+    <string name="oneplr">Start</string>
     <string name="PD">Paired Devices</string>
     <string name="other_devices">Other Available Devices</string>
 
