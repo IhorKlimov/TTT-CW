@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             sMakeOut = Typeface.createFromAsset(getAssets(), "fonts/MakeOut.ttf");
             sRosemary = Typeface.createFromAsset(getAssets(), "fonts/Rosemary.ttf");
         }
-
+        //
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             gameController.setGame(
