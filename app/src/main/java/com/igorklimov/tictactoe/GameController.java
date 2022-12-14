@@ -21,8 +21,8 @@ public class GameController {
     private final ActivityGameBinding mBinding;
 
     private final Game game = new Game();
-    private AI mAi;
     private final Field field = new Field();
+    private AI ai;
 
     public GameController(MainActivity activity, ActivityGameBinding mBinding) {
         this.activity = activity;
@@ -116,9 +116,9 @@ public class GameController {
     }
 
     public void aiTurn() {
-        mAi.makeDecision();
-        int row = mAi.getRow();
-        int col = mAi.getCol();
+        ai.makeDecision();
+        int row = ai.getRow();
+        int col = ai.getCol();
         activity.setText(row, col);
     }
 
@@ -130,7 +130,7 @@ public class GameController {
     }
 
     public void setUpAi() {
-        mAi = new AI(field, game);
+        ai = new AI(field, game);
         if (game.playerFirst % 2 != 0) {
             playersTurn = false;
             Handler handler = new Handler();
