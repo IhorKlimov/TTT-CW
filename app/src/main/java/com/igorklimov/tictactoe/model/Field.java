@@ -1,4 +1,4 @@
-package com.igorklimov.tictactoe;
+package com.igorklimov.tictactoe.model;
 
 public class Field {
     private final boolean[][] isTaken = new boolean[3][3];

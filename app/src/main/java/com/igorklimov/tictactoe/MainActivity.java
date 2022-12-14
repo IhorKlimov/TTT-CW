@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.igorklimov.tictactoe.databinding.ActivityGameBinding;
+import com.igorklimov.tictactoe.model.Game;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = "TTT";
@@ -52,11 +53,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mBinding.result.setTypeface(sRosemary);
-        mBinding.you.append(gameController.playersName + ": " + Game.toString(gameController.playersChar));
-        mBinding.opponent.append(gameController.opponentsName + ": " + Game.toString(gameController.opponentChar));
-        mBinding.score.append(gameController.playersScore + ":" + gameController.opponentsScore);
+        mBinding.you.append(gameController.playersName + ": " + Game.toString(gameController.getGame().playersChar));
+        mBinding.opponent.append(gameController.opponentsName + ": " + Game.toString(gameController.getGame().opponentChar));
+        mBinding.score.append(gameController.getGame().getPlayersScore() + ":" + gameController.getGame().getOpponentsScore());
 
-        if (!btGame && !gameController.isWifiGame) {
+        if (!btGame && !gameController.getGame().isWifiGame()) {
             gameController.setUpAi();
         }
     }
@@ -71,22 +72,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void cellClick(View view) {
-        if (gameController.playersTurn && !gameController.isDone) {
+        if (gameController.playersTurn && !gameController.getGame().isDone()) {
             TextView v = (TextView) view;
             String cellId = view.getResources()
                     .getResourceEntryName(view.getId()).replace("cell", "");
             int row = Integer.valueOf(cellId.substring(0, 1));
             int col = Integer.valueOf(cellId.substring(1, 2));
             if (!gameController.getField().isTaken(row, col)) {
-                v.setText(Game.toString(gameController.playersChar));
-                v.setTextColor(Game.getColor(gameController.playersChar));
+                v.setText(Game.toString(gameController.getGame().playersChar));
+                v.setTextColor(Game.getColor(gameController.getGame().playersChar));
                 v.setTypeface(sMakeOut);
-                gameController.getField().getField()[row][col] = gameController.playersChar;
+                gameController.getField().getField()[row][col] = gameController.getGame().playersChar;
                 gameController.getField().setTaken(row, col, true);
                 gameController.playersTurn = false;
-                gameController.turnCount++;
+                gameController.getGame().incrementTurnCount();
                 gameController.checkVictory();
-                if (!btGame && gameController.turnCount != 9 && !gameController.isDone && !gameController.isWifiGame) {
+                if (!btGame && gameController.getGame().getTurnCount() != 9 && !gameController.getGame().isDone() && !gameController.getGame().isWifiGame()) {
                     new Handler().postDelayed(() -> gameController.aiTurn(), 500);
                 }
             }
@@ -128,13 +129,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         gameController.getField().setTaken(row, col, true);
-        if (!gameController.isDone) {
-            view.setText(Game.toString(gameController.opponentChar));
-            view.setTextColor(Game.getColor(gameController.opponentChar));
+        if (!gameController.getGame().isDone()) {
+            view.setText(Game.toString(gameController.getGame().opponentChar));
+            view.setTextColor(Game.getColor(gameController.getGame().opponentChar));
             view.setTypeface(sMakeOut);
-            gameController.getField().getField()[row][col] = gameController.opponentChar;
+            gameController.getField().getField()[row][col] = gameController.getGame().opponentChar;
             gameController.playersTurn = true;
-            gameController.turnCount++;
+            gameController.getGame().incrementTurnCount();
             gameController.checkVictory();
         }
     }
@@ -199,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void resetGame(View view) {
         Intent intent = new Intent(this, MainActivity.class);
-        gameController.playerFirst++;
+        gameController.getGame().incrementPlayerFirst();
         startActivity(intent);
         finish();
     }

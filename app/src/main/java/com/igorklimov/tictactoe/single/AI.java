@@ -16,9 +16,9 @@
 
 package com.igorklimov.tictactoe.single;
 
-import com.igorklimov.tictactoe.Field;
-import com.igorklimov.tictactoe.Game;
-import com.igorklimov.tictactoe.Game.Side;
+import com.igorklimov.tictactoe.model.Field;
+import com.igorklimov.tictactoe.model.Game;
+import com.igorklimov.tictactoe.model.Game.Side;
 
 import java.util.Random;
 
@@ -26,16 +26,12 @@ public class AI {
     private final int[] opponentsChoice = new int[2];
     private final Random random = new Random();
     private final Field field;
-    @Side
-    private final int playersChar;
-    @Side
-    private final int opponentChar;
+    private Game game;
+    
 
-
-    public AI(Field field, @Side int playersChar, @Side int opponentChar) {
+    public AI(Field field, Game game) {
         this.field = field;
-        this.playersChar = playersChar;
-        this.opponentChar = opponentChar;
+        this.game = game;
     }
 
     public void makeDecision() {
@@ -56,25 +52,25 @@ public class AI {
     }
 
     private boolean playerIsCloseToWin() {
-        return hasTwoCharsInLine(0, 0, 0, 1, 0, 2, playersChar)
-                || hasTwoCharsInLine(1, 0, 1, 1, 1, 2, playersChar)
-                || hasTwoCharsInLine(2, 0, 2, 1, 2, 2, playersChar)
-                || hasTwoCharsInLine(0, 0, 1, 0, 2, 0, playersChar)
-                || hasTwoCharsInLine(0, 1, 1, 1, 2, 1, playersChar)
-                || hasTwoCharsInLine(0, 2, 1, 2, 2, 2, playersChar)
-                || hasTwoCharsInLine(0, 0, 1, 1, 2, 2, playersChar)
-                || hasTwoCharsInLine(0, 2, 1, 1, 2, 0, playersChar);
+        return hasTwoCharsInLine(0, 0, 0, 1, 0, 2, game.playersChar)
+                || hasTwoCharsInLine(1, 0, 1, 1, 1, 2, game.playersChar)
+                || hasTwoCharsInLine(2, 0, 2, 1, 2, 2, game.playersChar)
+                || hasTwoCharsInLine(0, 0, 1, 0, 2, 0, game.playersChar)
+                || hasTwoCharsInLine(0, 1, 1, 1, 2, 1, game.playersChar)
+                || hasTwoCharsInLine(0, 2, 1, 2, 2, 2, game.playersChar)
+                || hasTwoCharsInLine(0, 0, 1, 1, 2, 2, game.playersChar)
+                || hasTwoCharsInLine(0, 2, 1, 1, 2, 0, game.playersChar);
     }
 
     private boolean opponentIsCloseToWin() {
-        return hasTwoCharsInLine(0, 0, 0, 1, 0, 2, opponentChar)
-                || hasTwoCharsInLine(1, 0, 1, 1, 1, 2, opponentChar)
-                || hasTwoCharsInLine(2, 0, 2, 1, 2, 2, opponentChar)
-                || hasTwoCharsInLine(0, 0, 1, 0, 2, 0, opponentChar)
-                || hasTwoCharsInLine(0, 1, 1, 1, 2, 1, opponentChar)
-                || hasTwoCharsInLine(0, 2, 1, 2, 2, 2, opponentChar)
-                || hasTwoCharsInLine(0, 0, 1, 1, 2, 2, opponentChar)
-                || hasTwoCharsInLine(0, 2, 1, 1, 2, 0, opponentChar);
+        return hasTwoCharsInLine(0, 0, 0, 1, 0, 2, game.opponentChar)
+                || hasTwoCharsInLine(1, 0, 1, 1, 1, 2, game.opponentChar)
+                || hasTwoCharsInLine(2, 0, 2, 1, 2, 2, game.opponentChar)
+                || hasTwoCharsInLine(0, 0, 1, 0, 2, 0, game.opponentChar)
+                || hasTwoCharsInLine(0, 1, 1, 1, 2, 1, game.opponentChar)
+                || hasTwoCharsInLine(0, 2, 1, 2, 2, 2, game.opponentChar)
+                || hasTwoCharsInLine(0, 0, 1, 1, 2, 2, game.opponentChar)
+                || hasTwoCharsInLine(0, 2, 1, 1, 2, 0, game.opponentChar);
     }
 
     private boolean hasTwoCharsInLine(int r1, int c1, int r2, int c2, int r3, int c3, int side) {
@@ -109,17 +105,17 @@ public class AI {
 
     @SuppressWarnings("WrongConstant")
     private boolean opponentHasOneChar(int r1, int c1, int r2, int c2, int r3, int c3) {
-        if (field.getField()[r1][c1] == opponentChar && !field.isTaken(r2, c2) && !field.isTaken(r3, c3)) {
+        if (field.getField()[r1][c1] == game.opponentChar && !field.isTaken(r2, c2) && !field.isTaken(r3, c3)) {
             opponentsChoice[0] = r3;
             opponentsChoice[1] = c3;
             return true;
         }
-        if (field.getField()[r2][c2] == opponentChar && !field.isTaken(r1, c1) && !field.isTaken(r3, c3)) {
+        if (field.getField()[r2][c2] == game.opponentChar && !field.isTaken(r1, c1) && !field.isTaken(r3, c3)) {
             opponentsChoice[0] = r1;
             opponentsChoice[1] = c1;
             return true;
         }
-        if (field.getField()[r3][c3] == opponentChar && !field.isTaken(r1, c1) && !field.isTaken(r2, c2)) {
+        if (field.getField()[r3][c3] == game.opponentChar && !field.isTaken(r1, c1) && !field.isTaken(r2, c2)) {
             opponentsChoice[0] = r1;
             opponentsChoice[1] = c1;
             return true;

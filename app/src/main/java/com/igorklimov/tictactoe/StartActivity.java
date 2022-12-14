@@ -8,6 +8,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.igorklimov.tictactoe.model.Game;
+
 public class StartActivity extends AppCompatActivity {
     Context context;
 

@@ -5,7 +5,9 @@ import static android.view.View.VISIBLE;
 import android.graphics.Color;
 import android.os.Handler;
 
-import com.igorklimov.tictactoe.Game.Side;
+import com.igorklimov.tictactoe.model.Field;
+import com.igorklimov.tictactoe.model.Game;
+import com.igorklimov.tictactoe.model.Game.Side;
 import com.igorklimov.tictactoe.databinding.ActivityGameBinding;
 import com.igorklimov.tictactoe.single.AI;
 
@@ -18,19 +20,9 @@ class GameController {
     private final MainActivity activity;
     private final ActivityGameBinding mBinding;
 
-    int turnCount = 0;
-    boolean isDone = false;
-    @Side
-    public static int playersChar;
-    @Side
-    public static int opponentChar;
-    static int playersScore = 0;
-    static int opponentsScore = 0;
-    public static int playerFirst = 2;
-
+    private final Game game = new Game();
     private AI mAi;
     private final Field field = new Field();
-    boolean isWifiGame;
 
     public GameController(MainActivity activity, ActivityGameBinding mBinding) {
         this.activity = activity;
@@ -95,30 +87,30 @@ class GameController {
             }, 100);
             return;
         }
-        if (turnCount == 9 && !isDone) {
+        if (game.getTurnCount() == 9 && !game.isDone()) {
             new Handler().postDelayed(() -> checkWinner(0, 0, true), 100);
         }
     }
 
     @SuppressWarnings("WrongConstant")
     private void checkWinner(int row, int col, boolean draw) {
-        isDone = true;
+        game.setDone();
         if (draw) {
             mBinding.result.setTextColor(Color.GRAY);
             mBinding.result.setText(R.string.Draw);
-        } else if (field.getField()[row][col] == playersChar) {
+        } else if (field.getField()[row][col] == game.playersChar) {
             mBinding.result.setTextColor(Color.parseColor("#4CAF50"));
             mBinding.result.setText(R.string.YouWin);
-            playersScore++;
-            mBinding.score.setText(String.format("Score %d:%d", playersScore, opponentsScore));
+            game.incrementPlayerScore();
+            mBinding.score.setText(String.format("Score %d:%d", game.getPlayersScore(), game.getOpponentsScore()));
         } else {
             mBinding.result.setTextColor(Color.parseColor("#b22222"));
             mBinding.result.setText(R.string.YouLose);
-            opponentsScore++;
-            mBinding.score.setText(String.format("Score %d:%d", playersScore, opponentsScore));
+            game.incrementOpponentScore();
+            mBinding.score.setText(String.format("Score %d:%d", game.getPlayersScore(), game.getOpponentsScore()));
         }
         mBinding.result.setVisibility(VISIBLE);
-        if (!isWifiGame) {
+        if (!game.isWifiGame()) {
             mBinding.reset.setVisibility(VISIBLE);
         }
     }
@@ -131,15 +123,15 @@ class GameController {
     }
 
     public void setGame(int playerSide, int opponentSide, String playersName, String opponentsName) {
-        playersChar = playerSide;
-        opponentChar = opponentSide;
+        game.playersChar = playerSide;
+        game.opponentChar = opponentSide;
         this.playersName = playersName;
         this.opponentsName = opponentsName;
     }
 
     public void setUpAi() {
-        mAi = new AI(field, playersChar, opponentChar);
-        if (playerFirst % 2 != 0) {
+        mAi = new AI(field, game);
+        if (game.playerFirst % 2 != 0) {
             playersTurn = false;
             Handler handler = new Handler();
             handler.postDelayed(() -> aiTurn(), 500);
@@ -152,4 +144,7 @@ class GameController {
         return field;
     }
 
+    public Game getGame() {
+        return game;
+    }
 }
