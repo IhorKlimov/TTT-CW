@@ -3,7 +3,7 @@
     <FrameLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.igorklimov.tictactoe.wifi.ConnectActivity">
+        tools:context="com.igorklimov.tictactoe.wifi.ConnectActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
