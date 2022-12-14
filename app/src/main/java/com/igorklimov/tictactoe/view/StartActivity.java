@@ -1,4 +1,4 @@
-package com.igorklimov.tictactoe;
+package com.igorklimov.tictactoe.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,10 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.igorklimov.tictactoe.R;
+import com.igorklimov.tictactoe.Utils;
 import com.igorklimov.tictactoe.model.Game;
+import com.igorklimov.tictactoe.view.MainActivity;
 
 public class StartActivity extends AppCompatActivity {
     Context context;

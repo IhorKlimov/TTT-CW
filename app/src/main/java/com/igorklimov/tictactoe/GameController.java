@@ -7,15 +7,15 @@ import android.os.Handler;
 
 import com.igorklimov.tictactoe.model.Field;
 import com.igorklimov.tictactoe.model.Game;
-import com.igorklimov.tictactoe.model.Game.Side;
 import com.igorklimov.tictactoe.databinding.ActivityGameBinding;
 import com.igorklimov.tictactoe.single.AI;
+import com.igorklimov.tictactoe.view.MainActivity;
 
-class GameController {
+public class GameController {
 
     public static String playersName;
     public static String opponentsName;
-    static boolean playersTurn;
+    public static boolean playersTurn;
 
     private final MainActivity activity;
     private final ActivityGameBinding mBinding;
@@ -30,7 +30,7 @@ class GameController {
 
     }
 
-    void checkVictory() {
+    public void checkVictory() {
         if (field.getField()[0][0] == field.getField()[0][1] && field.getField()[0][1] == field.getField()[0][2] && field.getField()[0][0] != 0) {
             new Handler().postDelayed(() -> {
                 activity.drawHLine(0);
@@ -115,7 +115,7 @@ class GameController {
         }
     }
 
-    void aiTurn() {
+    public void aiTurn() {
         mAi.makeDecision();
         int row = mAi.getRow();
         int col = mAi.getCol();

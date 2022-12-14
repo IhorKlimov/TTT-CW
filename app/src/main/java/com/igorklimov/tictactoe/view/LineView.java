@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.igorklimov.tictactoe.res;
+package com.igorklimov.tictactoe.view;
 
 import android.content.Context;
 import android.graphics.BlurMaskFilter;

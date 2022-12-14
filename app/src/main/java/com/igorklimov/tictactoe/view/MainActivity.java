@@ -1,4 +1,4 @@
-package com.igorklimov.tictactoe;
+package com.igorklimov.tictactoe.view;
 
 import static android.view.View.VISIBLE;
 import static android.widget.Toast.LENGTH_SHORT;
@@ -16,6 +16,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.igorklimov.tictactoe.GameController;
+import com.igorklimov.tictactoe.R;
+import com.igorklimov.tictactoe.Utils;
 import com.igorklimov.tictactoe.databinding.ActivityGameBinding;
 import com.igorklimov.tictactoe.model.Game;
 
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    void setText(int row, int col) {
+    public void setText(int row, int col) {
         Log.d(LOG_TAG, "setText: " + row + " " + col);
         TextView view = null;
         switch (row) {
@@ -140,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void drawHLine(int row) {
+    public void drawHLine(int row) {
         int left = mBinding.grid.getLeft();
         int right = mBinding.grid.getRight();
         Rect r = new Rect();
@@ -157,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         drawLine(left, y, right, y);
     }
 
-    void drawVLine(int col) {
+    public void drawVLine(int col) {
         int top = mBinding.grid.getTop();
         int bottom = mBinding.grid.getBottom();
         Rect r = new Rect();
@@ -181,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         mBinding.lineView.invalidate();
     }
 
-    void drawDLine(boolean rising) {
+    public void drawDLine(boolean rising) {
         int left = mBinding.grid.getLeft();
         int right = mBinding.grid.getRight();
         int start;
